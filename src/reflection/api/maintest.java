@@ -17,8 +17,11 @@ public class maintest {
         System.out.println( investigator.isExtending());
         System.out.println( investigator.getParentClassSimpleName());
         System.out.println( investigator.isParentClassAbstract());
-        System.out.println( investigator.invokeMethodThatReturnsInt("calcArea"));
+        System.out.println( investigator.invokeMethodThatReturnsInt("calcSomthing", "hi"));
         System.out.println( investigator.getNamesOfAllFieldsIncludingInheritanceChain());
+        System.out.println( investigator.getInheritanceChain(" >> "));
+        System.out.println( investigator.createInstance(2, 10,20));
+
 
 
     }

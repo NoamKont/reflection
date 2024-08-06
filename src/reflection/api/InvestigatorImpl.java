@@ -8,8 +8,8 @@ import java.util.Set;
 
 public class InvestigatorImpl implements Investigator{
 
-    public Class theClass;
-    public Object theObject;
+    private Class theClass;
+    private Object theObject;
     @Override
     public void load(Object anInstanceOfSomething) {
         this.theClass = anInstanceOfSomething.getClass();
@@ -114,8 +114,12 @@ public class InvestigatorImpl implements Investigator{
     @Override
     public int invokeMethodThatReturnsInt(String methodName, Object... args){
         Object result = 0;
+        Class[] parameterTypes = new Class[args.length];
+        for(int i = 0; i<args.length; i++)
+        {
+            parameterTypes[i] = getPrimitiveClass(args[i].getClass());
+        }
         try{
-            Class<?>[] parameterTypes = Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new);
             Method func = theClass.getMethod(methodName, parameterTypes);
             result = (func.invoke(theObject,args));
         }
@@ -134,18 +138,66 @@ public class InvestigatorImpl implements Investigator{
 
         return (int)result;
     }
-//    @Override
-//    public Object createInstance(int numberOfArgs, Object... args){
-//
-//    }
-//    @Override
-//    public Object elevateMethodAndInvoke(String name, Class<?>[] parametersTypes, Object... args){
-//
-//    }
-//    @Override
-//    public String getInheritanceChain(String delimiter){
-//
-//    }
+    @Override
+    public Object createInstance(int numberOfArgs, Object... args){
+        Class[] parameterTypes = new Class[numberOfArgs];
+        for(int i = 0; i < numberOfArgs; i++) {
+            parameterTypes[i] = getPrimitiveClass(args[i].getClass());
+        }
+        try{
+            Constructor constructor = theClass.getConstructor(parameterTypes);
+            return constructor.newInstance(args);
+        }
+        catch (Exception e){
+            System.out.println("Exception " + e.getMessage());
+        }
+        return null;
+    }
+    @Override
+    public Object elevateMethodAndInvoke(String name, Class<?>[] parametersTypes, Object... args){
+        try{
+            Method func = theClass.getDeclaredMethod(name, parametersTypes);
+            func.setAccessible(true);
+            return func.invoke(theObject, args);
+        }
+        catch (Exception e){
+            System.out.println("Error " + e.getMessage());
+        }
+        return null;
+    }
+    @Override
+    public String getInheritanceChain(String delimiter){
+        return getInheritanceChainHelper(theClass, delimiter);
+    }
 
-
+    private String getInheritanceChainHelper(Class Clazz, String delimiter){
+        if(Clazz.getSimpleName().equals("Object")){
+            return new String("Object");
+        }
+        else{
+          String inheritance = getInheritanceChainHelper(Clazz.getSuperclass(), delimiter);
+          inheritance += delimiter;
+          inheritance += Clazz.getSimpleName();
+          return inheritance;
+        }
+    }
+    private Class<?> getPrimitiveClass(Class<?> clazz) {
+        if (clazz == Integer.class)
+            return int.class;
+        if (clazz == Double.class)
+            return double.class;
+        if (clazz == Float.class)
+            return float.class;
+        if (clazz == Long.class)
+            return long.class;
+        if (clazz == Character.class)
+            return char.class;
+        if (clazz == Byte.class)
+            return byte.class;
+        if (clazz == Short.class)
+            return short.class;
+        if (clazz == Boolean.class)
+            return boolean.class;
+        return clazz;
+    }
 }

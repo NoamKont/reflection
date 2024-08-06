@@ -110,39 +110,39 @@ public interface Investigator {
      */
     int invokeMethodThatReturnsInt(String methodName, Object... args);
 
-//    /**
-//     * creates a new instance of the given class, using a specific constructor,
-//     * to be determined by the number of given arguments.
-//     * No worries: there will be no ambiguity, i.e. two constructors that gets in 2 arguments each one of them...
-//     * This method should act as a standalone and without any side effects, that is, the newly created
-//     * instance SHOULD NOT replace the original given instance.
-//     * @param numberOfArgs number of arguments that a specific constructor has. can be 0.
-//     * @param args arguments to pass to the constructor
-//     *
-//     * @return the newly created instance
-//     */
-//    Object createInstance(int numberOfArgs, Object... args);
-//
-//    /**
-//     * changes access control of a method and invokes it (== invokes a private method...)
-//     * you can assume that the method exists by its name, and matched by the relevant parameters types.
-//     * the method will appear in the current instance and will not belong to its inheritance chain
-//     *
-//     * @param name name of the method to change its access modifier
-//     * @param parametersTypes the types of parameters the method accepts
-//     * @param args arguments to pass to the method invocation AS IS (once elevated)
-//     *
-//     * @return the result from the method invocation
-//     */
-//    Object elevateMethodAndInvoke(String name, Class<?>[] parametersTypes, Object... args);
-//
-//    /**
-//     * explores the inheritance chain of the object. returns a string representing the list of
-//     * parents this class has, starting from Object, and ending at the class name.
-//     * all classes names in the list should appear in their simple short name
-//     * @param delimiter a string to put between each two classes in the chain (e.g. "->")
-//     * @return a string denotes the inheritance chain.
-//     * It can look like this (given a decimeter of "->"): Object-><class name>->...-><class name>
-//     */
-//    String getInheritanceChain(String delimiter);
+    /**
+     * creates a new instance of the given class, using a specific constructor,
+     * to be determined by the number of given arguments.
+     * No worries: there will be no ambiguity, i.e. two constructors that gets in 2 arguments each one of them...
+     * This method should act as a standalone and without any side effects, that is, the newly created
+     * instance SHOULD NOT replace the original given instance.
+     * @param numberOfArgs number of arguments that a specific constructor has. can be 0.
+     * @param args arguments to pass to the constructor
+     *
+     * @return the newly created instance
+     */
+    Object createInstance(int numberOfArgs, Object... args);
+
+    /**
+     * changes access control of a method and invokes it (== invokes a private method...)
+     * you can assume that the method exists by its name, and matched by the relevant parameters types.
+     * the method will appear in the current instance and will not belong to its inheritance chain
+     *
+     * @param name name of the method to change its access modifier
+     * @param parametersTypes the types of parameters the method accepts
+     * @param args arguments to pass to the method invocation AS IS (once elevated)
+     *
+     * @return the result from the method invocation
+     */
+    Object elevateMethodAndInvoke(String name, Class<?>[] parametersTypes, Object... args);
+
+    /**
+     * explores the inheritance chain of the object. returns a string representing the list of
+     * parents this class has, starting from Object, and ending at the class name.
+     * all classes names in the list should appear in their simple short name
+     * @param delimiter a string to put between each two classes in the chain (e.g. "->")
+     * @return a string denotes the inheritance chain.
+     * It can look like this (given a decimeter of "->"): Object-><class name>->...-><class name>
+     */
+    String getInheritanceChain(String delimiter);
 }

@@ -33,6 +33,9 @@ public class Rectangle extends Polygon implements Comparable, Serializable {
     public int calcArea() {
         return x * y;
     }
+    public int calcSomthing(String n) {
+        return x * y;
+    }
 
     public int calcPerimeter() {
         return twice(x) + twice(y);
@@ -46,6 +49,10 @@ public class Rectangle extends Polygon implements Comparable, Serializable {
     public int compareTo(Object o) {
 
         return this.calcArea() - ((Rectangle)o).calcArea();
+    }
+    @Override
+    public String toString() {
+        return "Rectangle[x=" + x + ", y=" + y + "]";
     }
 }
 
